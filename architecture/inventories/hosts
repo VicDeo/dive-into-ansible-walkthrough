@@ -19,3 +19,5 @@ ansible_become_pass=password
 centos
 ubuntu
 
+[all:vars]
+ansible_port=1234
