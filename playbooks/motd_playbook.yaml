@@ -6,22 +6,29 @@
 -
 
   # Hosts: where our play will run and options it will run with
-  hosts: centos
-  user: root
-  gather_facts: false
+  hosts: linux
 
   # Vars: variables that will apply to the play, on all target systems
   vars:
-    motd: "Welcome to CentOS Linux - Ansible Rocks \n"
+    motd_centos: "Welcome to CentOS Linux - Ansible Rocks \n"
+    motd_ubuntu: "Welcome to Ubuntu Linux - Ansible Rocks \n"
 
   # Tasks: the list of tasks that will be executed within the play, this section
   #       can also be used for pre and post tasks
   tasks:
     - name: Configure a MOTD (message of the day)
       copy:
-        content: "{{ motd }}"
+        content: "{{ motd_centos }}"
         dest: /etc/motd
       notify: MOTD changed
+      when: ansible_distribution == "CentOS"
+
+    - name: Configure a MOTD (message of the day)
+      copy:
+        content: "{{ motd_ubuntu }}"
+        dest: /etc/motd
+      notify: MOTD changed
+      when: ansible_distribution == "Ubuntu"
 
   # Handlers: the list of handlers that are executed as a notify key from a task
   handlers:
