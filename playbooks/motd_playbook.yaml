@@ -11,13 +11,15 @@
   gather_facts: false
 
   # Vars: variables that will apply to the play, on all target systems
+  vars:
+    motd: "Welcome to CentOS Linux - Ansible Rocks \n"
 
   # Tasks: the list of tasks that will be executed within the play, this section
   #       can also be used for pre and post tasks
   tasks:
     - name: Configure a MOTD (message of the day)
       copy:
-        content: Welcome to CentOS Linux - Ansible Rocks
+        content: "{{ motd }}"
         dest: /etc/motd
 
   # Handlers: the list of handlers that are executed as a notify key from a task
