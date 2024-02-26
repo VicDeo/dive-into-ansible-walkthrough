@@ -8,6 +8,7 @@
   # Hosts: where our play will run and options it will run with
   hosts: centos
   user: root
+  gather_facts: false
 
   # Vars: variables that will apply to the play, on all target systems
 
