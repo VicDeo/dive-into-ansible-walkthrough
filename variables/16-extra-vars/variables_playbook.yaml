@@ -4,7 +4,15 @@
 # The minus in YAML this indicates a list item.  The playbook contains a list
 # of plays, with each play being a dictionary
 -
- 
+
+#####################################################################
+###  run me with either
+###     -e extra_vars_key='value'          # ini format
+###     -e {'extra_vars_key': 'value'}     # json format
+###     -e {extra_vars_key: value}         # yaml format
+###     -e @vars_file.yaml                 # external vars file, ini/yaml/json
+#####################################################################
+
   # Hosts: where our play will run and options it will run with
   hosts: centos1
  
