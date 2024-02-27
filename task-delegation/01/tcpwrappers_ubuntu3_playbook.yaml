@@ -95,5 +95,34 @@
       changed_when: False
       ignore_errors: True
 
+-
+
+  # Hosts: where our play will run and options it will run with
+  hosts: ubuntu3
+  gather_facts: False
+
+  # Tasks: the list of tasks that will be executed within the play, this section
+  # can also be used for pre and post tasks
+  tasks:
+    - name: Drop SSH connectivity from everywhere else
+      lineinfile:
+        path: /etc/hosts.deny
+        line: "sshd: ALL"
+        create: True
+
+-
+
+  # Hosts: where our play will run and options it will run with
+  hosts: all
+  gather_facts: False
+
+  # Tasks: the list of tasks that will be executed within the play, this section
+  # can also be used for pre and post tasks
+  tasks:
+    - name: Check that ssh can connect to ubuntu3 using the ssh tool
+      command: ssh -i ~/.ssh/ubuntu3_id_rsa -o BatchMode=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@ubuntu3 date
+      changed_when: False
+      ignore_errors: True
+
 # Three dots indicate the end of a YAML document
 ...
