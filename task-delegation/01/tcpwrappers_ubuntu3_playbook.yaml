@@ -124,5 +124,37 @@
       changed_when: False
       ignore_errors: True
 
+-
+
+  # Hosts: where our play will run and options it will run with
+  hosts: ubuntu-c, centos1, ubuntu1
+  # Serial is important as we are writing to a single file
+  serial: 1
+
+  # Tasks: the list of tasks that will be executed within the play, this section
+  # can also be used for pre and post tasks
+  tasks:
+    - name: Remove specific host entries in /etc/hosts.allow for sshd
+      lineinfile:
+        path: /etc/hosts.allow
+        line: "sshd: {{ ansible_hostname }}.diveinto.io"
+        state: absent
+      delegate_to: ubuntu3
+
+-
+
+  # Hosts: where our play will run and options it will run with
+  hosts: ubuntu3
+  gather_facts: False
+
+  # Tasks: the list of tasks that will be executed within the play, this section
+  # can also be used for pre and post tasks
+  tasks:
+    - name: Allow SSH connectivity from everywhere
+      lineinfile:
+        path: /etc/hosts.deny
+        line: "sshd: ALL"
+        state: absent
+
 # Three dots indicate the end of a YAML document
 ...
