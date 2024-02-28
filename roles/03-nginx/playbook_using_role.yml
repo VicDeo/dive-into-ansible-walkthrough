@@ -3,5 +3,5 @@
   hosts: linux
   roles:
     - nginx
-    - webapp
+    - { role: webapp, target_dir: "{%- if ansible_distribution == 'CentOS' -%}/usr/share/nginx/html{%- elif ansible_distribution == 'Ubuntu' -%}/var/www/html{%- endif %}" }
 ...
