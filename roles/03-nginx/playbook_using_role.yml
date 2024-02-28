@@ -3,4 +3,5 @@
   hosts: linux
   roles:
     - nginx
+    - webapp
 ...
