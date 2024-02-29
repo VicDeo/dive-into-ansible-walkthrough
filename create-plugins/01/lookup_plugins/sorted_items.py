@@ -24,7 +24,7 @@ EXAMPLES = """
 - name: "loop through list"
   ansible.builtin.debug:
     msg: "An item: {{ item }}"
-  with_items:
+  with_sorted_items:
     - 1
     - 2
     - 3
@@ -34,14 +34,14 @@ EXAMPLES = """
     name: "{{ item }}"
     groups: "wheel"
     state: present
-  with_items:
+  with_sorted_items:
      - testuser1
      - testuser2
 
 - name: "loop through list from a variable"
   ansible.builtin.debug:
     msg: "An item: {{ item }}"
-  with_items: "{{ somelist }}"
+  with_sorted_items: "{{ somelist }}"
 
 - name: more complex items to add several users
   ansible.builtin.user:
@@ -49,7 +49,7 @@ EXAMPLES = """
     uid: "{{ item.uid }}"
     groups: "{{ item.groups }}"
     state: present
-  with_items:
+  with_sorted_items:
      - { name: testuser1, uid: 1002, groups: "wheel, staff" }
      - { name: testuser2, uid: 1003, groups: staff }
 
@@ -69,4 +69,4 @@ class LookupModule(LookupBase):
 
     def run(self, terms, **kwargs):
 
-        return self._flatten(terms)
+        return self._flatten(sorted(terms, key=str))
